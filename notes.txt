@@ -1,0 +1,18 @@
+[~] Create a window
+  [+] Create window frame
+  [+] Make window and panels resizable
+  [+] Implement visualization display
+    [+] Resizable bars
+    [+] Resizable bar labels with value
+  [+] Implement MVP statistic display
+    [+] Place button 'Start'
+    [+] Place button 'Stop'
+[-] Integrate multi-algorithmic choice
+  [+] Write 'Bubble sort'
+  [+] Force it to sort bars on click buttons
+  [+] Create structure of date for manipulate list of data and change bar state
+    [+] Find out a structure of data that can work with this system
+  [-] Clean up the project
+  [-] ... (add new ones after reviewing the project)
+[-] Create an algorithm sorting display
+  [-] soon...
