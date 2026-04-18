@@ -13,21 +13,15 @@ import java.util.stream.IntStream;
 
 public class SortingContext {
     private final List<Integer> initialData;
-    private List<Bar> bars;
-    private boolean isSorted;
+
+    private final List<Bar> bars;
 
     public SortingContext(int maxValue) {
-        this.initialData = IntStream.rangeClosed(1, maxValue)
+        List<Integer> numbers = IntStream.rangeClosed(1, maxValue)
                 .boxed()
                 .collect(Collectors.toList());
-
+        this.initialData = Collections.unmodifiableList(numbers);
         this.bars = toBars(initialData);
-    }
-
-    public void shuffle() {
-        Collections.shuffle(initialData);
-        bars = toBars(initialData);
-        isSorted = false;
     }
 
     private List<Bar> toBars(List<Integer> initialData) {
@@ -36,23 +30,27 @@ public class SortingContext {
                 .collect(Collectors.toList());
     }
 
+    public void shuffle() {
+        Collections.shuffle(bars);
+    }
+
+    // todo: move this method to other class
     public Queue<Action> sort(SortAlgorithm sortAlgorithm) {
-        SortingCollection sortingCollection = new SortingCollection(new ArrayList<>(initialData));
+        List<Integer> integers = bars.stream()
+                .map(Bar::getValue)
+                .collect(Collectors.toList());
+        SortingCollection sortingCollection = new SortingCollection(integers);
         sortAlgorithm.sort(sortingCollection);
-        isSorted = true;
 
         return sortingCollection.getActions();
     }
 
     public List<Integer> getInitialData() {
-        return new ArrayList<>(initialData);
+        return initialData;
     }
 
     public List<Bar> getBars() {
         return bars;
     }
 
-    public boolean isSorted() {
-        return isSorted;
-    }
 }

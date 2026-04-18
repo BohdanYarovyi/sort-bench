@@ -1,28 +1,32 @@
 package app.model;
 
+import app.ApplicationProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.awt.*;
+import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
 
 @Getter
 @Setter
 @ToString
 public class Bar implements Comparable<Bar> {
     private final int value;
-    private Dimension size;
-    private Point position;
-    private Point textPosition;
-    private Font font;
 
-    private Color color;
+    private Dimension2D barSize;
+
+    private Point2D barPosition;
+
+    private Color innerColor;
+
     private Color borderColor;
 
     public Bar(int value) {
         this.value = value;
-        color = new Color(151, 151, 151);
-        borderColor = new Color(0, 0, 0);
+        this.innerColor = ApplicationProperties.BAR_IDLE_COLOR;
+        this.borderColor = ApplicationProperties.BAR_BORDER_COLOR;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package app.component.button;
 
 import lombok.Getter;
-import app.GlobalConstant;
+import app.ApplicationProperties;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +9,7 @@ import java.awt.geom.RoundRectangle2D;
 
 @Getter
 public abstract class ApplicationButton extends JButton {
-    public static final Font DEFAULT_FONT = new Font(GlobalConstant.FONT_FAMILY, Font.PLAIN, 36);
+    public static final Font DEFAULT_FONT = new Font(ApplicationProperties.APPLICATION_FONT, Font.PLAIN, 36);
 
     public static final Dimension DEFAULT_BUTTON_SIZE = new Dimension(120, 50);
 
@@ -137,14 +137,18 @@ public abstract class ApplicationButton extends JButton {
 
     @Getter
     public static class ButtonColorTheme {
-
         private final Color background;
+
         private final Color foreground;
+
         private final Color border;
+
         public ButtonColorTheme(Color background, Color foreground, Color border) {
             this.background = background;
             this.foreground = foreground;
             this.border = border;
         }
+
     }
+
 }
