@@ -2,80 +2,96 @@ package app.component.combinedPanel;
 
 import app.component.button.GreyButton;
 import app.component.label.ApplicationLabel;
-import app.component.textField.NewAmountField;
-import app.controller.SortingController;
+import app.component.textField.OnlyIntegerField;
 import app.exception.IntegerBoundsViolationException;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.function.IntConsumer;
 
-import static app.ApplicationProperties.MAX_BAR_AMOUNT;
-import static app.ApplicationProperties.MIN_BAR_AMOUNT;
-
-public class NewValuePanel extends JPanel implements ActionListener {
+public class InsertNumberPanel extends JPanel implements ActionListener {
     private static final int HINT_LABEL_FONT_SIZE = 12;
 
-    private final GridBagConstraintsConfigurator configurator;
+    private static Border getDefaultBorder() {
+        Color borderHighlight = new Color(80, 80, 80);
+        Color borderShadow = new Color(30, 30, 30);
 
-    private final SortingController sortingController;
+        return new EtchedBorder(EtchedBorder.RAISED, borderHighlight, borderShadow);
+    }
+
+    private final GridBagConstraintsConfigurator configurator;
 
     private final ApplicationLabel valueLabel;
 
     private final ApplicationLabel hintLabel;
 
-    private final NewAmountField valueField;
+    private final OnlyIntegerField valueField;
 
     private final GreyButton confirmButton;
 
-    public NewValuePanel(SortingController sortingController) {
-        this.sortingController = sortingController;
-        this.configurator = new GridBagConstraintsConfigurator();
-        this.valueLabel = new ApplicationLabel("Amount");
-        this.valueField = new NewAmountField(5);
-        this.confirmButton = new GreyButton("Insert", 120, 30);
-        this.hintLabel = createHintLabel();
+    private final IntConsumer integerConsumer;
 
+    private int minValue = 0;
+
+    private int maxValue = 0;
+
+    public InsertNumberPanel(IntConsumer integerConsumer) {
+        this.integerConsumer = integerConsumer;
+        this.configurator = new GridBagConstraintsConfigurator();
+        this.valueLabel = new ApplicationLabel();
+        this.hintLabel = new ApplicationLabel();
+        this.valueField = new OnlyIntegerField();
+        this.confirmButton = new GreyButton("Insert", 120, 30);
+
+        configureHintLabel();
+        configureOnlyIntegerField();
         configure();
-        configureComponents();
     }
 
     private void configure() {
-        Color borderHighlight = new Color(80, 80, 80);
-        Color borderShadow = new Color(30, 30, 30);
-        setBorder(new EtchedBorder(EtchedBorder.RAISED, borderHighlight, borderShadow));
-    }
-
-    private ApplicationLabel createHintLabel() {
-        String text = MIN_BAR_AMOUNT + " <= x <= " + MAX_BAR_AMOUNT;
-
-        return new ApplicationLabel(text, HINT_LABEL_FONT_SIZE);
-    }
-
-    private void configureComponents() {
         setLayout(new GridBagLayout());
 
         GridBagConstraints valueLabelConstraints = configurator.getValueLabelConstraints();
         add(valueLabel, valueLabelConstraints);
 
-        GridBagConstraints valueFieldConstraints = configurator.getValueFieldConstraints();
-        add(valueField, valueFieldConstraints);
-
         GridBagConstraints hintLabelConstraints = configurator.getHintLabelConstraints();
         add(hintLabel, hintLabelConstraints);
+
+        GridBagConstraints valueFieldConstraints = configurator.getValueFieldConstraints();
+        add(valueField, valueFieldConstraints);
 
         GridBagConstraints confirmButtonConstraints = configurator.getConfirmButtonConstraints();
         confirmButton.addActionListener(this);
         add(confirmButton, confirmButtonConstraints);
+
+        setBorder(getDefaultBorder());
+    }
+
+    private void configureHintLabel() {
+        Font font = ApplicationLabel.DEFAULT_FONT.deriveFont(Float.valueOf(HINT_LABEL_FONT_SIZE));
+        String text = getHintText();
+
+        hintLabel.setFont(font);
+        hintLabel.setText(text);
+    }
+
+    private String getHintText() {
+        return minValue + " <= x <= " + maxValue;
+    }
+
+    private void configureOnlyIntegerField() {
+        valueField.setColumns(5);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
             int fieldValue = valueField.getValidValue();
-            sortingController.initNewAmount(fieldValue);
+            integerConsumer.accept(fieldValue);
             valueField.setNormalAppearance();
         } catch (IntegerBoundsViolationException ex) {
             valueField.setErrorAppearance();
@@ -88,6 +104,26 @@ public class NewValuePanel extends JPanel implements ActionListener {
         for (Component component : getComponents()) {
             component.setEnabled(enabled);
         }
+    }
+
+    public void setValue(int value) {
+        valueField.setValue(value);
+    }
+
+    public void setLabelText(String text) {
+        valueLabel.setText(text);
+    }
+
+    public void setMinValue(int value) {
+        this.minValue = value;
+        valueField.setMinValue(value);
+        hintLabel.setText(getHintText());
+    }
+
+    public void setMaxValue(int value) {
+        this.maxValue = value;
+        valueField.setMaxValue(value);
+        hintLabel.setText(getHintText());
     }
 
     private static class GridBagConstraintsConfigurator {

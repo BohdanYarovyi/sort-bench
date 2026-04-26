@@ -3,10 +3,12 @@ package app.component.button;
 import java.awt.*;
 
 public class ShuffleButton extends ApplicationButton {
+    public static final String BUTTON_TEXT = "Shuffle";
+
     private final int buttonWidth = 200;
 
     public ShuffleButton() {
-        super("Shuffle");
+        super(BUTTON_TEXT);
     }
 
     @Override
@@ -41,4 +43,5 @@ public class ShuffleButton extends ApplicationButton {
         Dimension size = super.getButtonSize();
         return new Dimension(buttonWidth, size.height);
     }
+
 }

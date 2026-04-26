@@ -20,7 +20,7 @@ public class AlgorithmDashboardPanel extends JPanel {
         controlPanel = new ControlPanel(sortingController);
 
         configurePanels();
-        sortingController.initNewAmount(ApplicationProperties.STARTUP_BAR_AMOUNT);
+        sortingController.setBarsAmount(ApplicationProperties.STARTUP_BARS_AMOUNT);
     }
 
     private void configurePanels() {

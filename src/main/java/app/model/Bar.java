@@ -34,4 +34,16 @@ public class Bar implements Comparable<Bar> {
         return this.value - other.value;
     }
 
+    public void setPeeked() {
+        innerColor = ApplicationProperties.BAR_PEEK_COLOR;
+    }
+
+    public void setSwapped() {
+        innerColor = ApplicationProperties.BAR_SWAP_COLOR;
+    }
+
+    public void setUnpeeked() {
+        innerColor = ApplicationProperties.BAR_IDLE_COLOR;
+    }
+
 }

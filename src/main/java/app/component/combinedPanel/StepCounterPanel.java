@@ -4,12 +4,23 @@ import app.component.label.ApplicationLabel;
 import app.listener.UpdateStepCounterListener;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
 public class StepCounterPanel extends JPanel implements UpdateStepCounterListener {
+
+    private static Border getDefaultBorder() {
+        Color borderHighlight = new Color(80, 80, 80);
+        Color borderShadow = new Color(30, 30, 30);
+
+        return new EtchedBorder(EtchedBorder.RAISED, borderHighlight, borderShadow);
+    }
+
     private final GridBagConstraintsConfigurator configurator;
+
     private final ApplicationLabel titleLabel;
+
     private final ApplicationLabel valueLabel;
 
     public StepCounterPanel() {
@@ -18,16 +29,9 @@ public class StepCounterPanel extends JPanel implements UpdateStepCounterListene
         this.valueLabel = new ApplicationLabel("N/A");
 
         configure();
-        configureComponents();
     }
 
     private void configure() {
-        Color borderHighlight = new Color(80, 80, 80);
-        Color borderShadow = new Color(30, 30, 30);
-        setBorder(new EtchedBorder(EtchedBorder.RAISED, borderHighlight, borderShadow));
-    }
-
-    private void configureComponents() {
         setLayout(new GridBagLayout());
 
         GridBagConstraints titleLabelConstraints = configurator.getTitleLabelConstraints();
@@ -35,6 +39,8 @@ public class StepCounterPanel extends JPanel implements UpdateStepCounterListene
 
         GridBagConstraints valueLabelConstraints = configurator.getValueLabelConstraints();
         add(valueLabel, valueLabelConstraints);
+
+        setBorder(getDefaultBorder());
     }
 
     @Override

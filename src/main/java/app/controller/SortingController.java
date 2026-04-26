@@ -1,15 +1,14 @@
 package app.controller;
 
 public interface SortingController {
-
     void start();
-
-    void shuffle();
 
     void stop();
 
-    void initNewAmount(int amount);
+    void shuffle();
 
+    void setBarsAmount(int amount);
 
+    void setDelay(int delay);
 
 }

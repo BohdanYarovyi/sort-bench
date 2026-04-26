@@ -20,11 +20,16 @@
      [+] Refactor StatisticMonitorPanel
      [+] Reorganize them using GridBagLayoutManager instead of custom AdaptivePanel abstract class
   [+] Refactor BarAlignmentController and SortingDisplayDrawer to show bars more accuracy
-[~] Rework SimpleSortingController and add more methods on it
+[+] Rework SimpleSortingController and add more methods on it
   [+] Add changing amount of components
   [+] Add step counter
-  [-] Add speed pane
-  [-] Refactor code
+  [+] Add speed pane
+  [+] Refactor code
+[-] Add some info on the Control panel about current state of the program
+    On the left side we should have buttons and other control components. On the right side
+    we should have components that show information about current state of the program or
+    algorithm execution process (what current delay, what status {sorted, unsorted}, steps,
+    what algorithm is using, ).
 [-] Place all components on the pane
 [-] Implement algorithm collection pane
 [-] Create LIB for adding any sorting algorithm to program

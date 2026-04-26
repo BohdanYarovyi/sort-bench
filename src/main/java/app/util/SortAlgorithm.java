@@ -1,7 +1,7 @@
 package app.util;
 
-public abstract class SortAlgorithm {
+public interface SortAlgorithm {
 
-    public abstract void sort(SortingCollection collection);
+    void sort(SortingCollection collection);
 
 }

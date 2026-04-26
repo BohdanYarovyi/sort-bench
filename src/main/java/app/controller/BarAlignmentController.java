@@ -12,16 +12,17 @@ public class BarAlignmentController {
 
     private static final double BAR_MARGIN_BOTTOM = 10.0;
 
-    private static final double BAR_HORIZONTAL_GAP = 4.0;
-
     private static final double BAR_MARGIN_SIDE = 10.0;
+
+    private static final double BAR_HORIZONTAL_GAP = 4.0;
 
     public void align(List<Bar> bars, Dimension2D environmentSize) {
         double barWidth = calculateBarWidth(bars, environmentSize);
         double barHeightUnit = calculateHeightUnit(bars, environmentSize);
 
         for (int i = 0; i < bars.size(); i++) {
-            placeBar(bars.get(i), i, barWidth, barHeightUnit, environmentSize);
+            Bar bar = bars.get(i);
+            placeBar(bar, i, barWidth, barHeightUnit, environmentSize);
         }
     }
 

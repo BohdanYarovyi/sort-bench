@@ -1,13 +1,9 @@
 package app.model;
 
-import app.util.SortAlgorithm;
-import app.util.SortingCollection;
-import app.util.SortingCollection.Action;
 import lombok.Getter;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -31,19 +27,14 @@ public class SortingContext {
                 .collect(Collectors.toList());
     }
 
-    public void shuffle() {
-        Collections.shuffle(bars);
-    }
-
-    // todo: move this method to other class
-    public Queue<Action> sort(SortAlgorithm sortAlgorithm) {
-        List<Integer> integers = bars.stream()
+    public List<Integer> getBarsValues() {
+        return bars.stream()
                 .map(Bar::getValue)
                 .collect(Collectors.toList());
-        SortingCollection sortingCollection = new SortingCollection(integers);
-        sortAlgorithm.sort(sortingCollection);
+    }
 
-        return sortingCollection.getActions();
+    public void refreshBars() {
+        bars.forEach(Bar::setUnpeeked);
     }
 
 }

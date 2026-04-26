@@ -1,12 +1,12 @@
 package app.panel;
 
+import app.ApplicationProperties;
 import app.component.button.StartButton;
 import app.component.button.ShuffleButton;
 import app.component.button.StopButton;
-import app.component.combinedPanel.NewValuePanel;
+import app.component.combinedPanel.InsertNumberPanel;
 import app.component.combinedPanel.StepCounterPanel;
 import app.controller.SimpleSortingController;
-import app.controller.SortingController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +21,9 @@ public class ControlPanel extends JPanel {
 
     private final ShuffleButton shuffleButton;
 
-    private final NewValuePanel newValuePanel;
+    private final InsertNumberPanel barsAmountPanel;
+
+    private final InsertNumberPanel stepDelayPanel;
 
     private final StepCounterPanel stepCounterPanel;
 
@@ -30,7 +32,8 @@ public class ControlPanel extends JPanel {
         this.startButton = new StartButton();
         this.stopButton = new StopButton();
         this.shuffleButton = new ShuffleButton();
-        this.newValuePanel = new NewValuePanel(sortingController);
+        this.barsAmountPanel = new InsertNumberPanel(sortingController::setBarsAmount);
+        this.stepDelayPanel = new InsertNumberPanel(sortingController::setDelay);
         this.stepCounterPanel = new StepCounterPanel();
 
         sortingController.setUpdateStepCounterListener(stepCounterPanel);
@@ -38,6 +41,8 @@ public class ControlPanel extends JPanel {
         configureButtonStart();
         configureButtonStop();
         configureButtonShuffle();
+        configureBarsAmountPanel();
+        configureStepDelayPanel();
         configure();
     }
 
@@ -47,7 +52,8 @@ public class ControlPanel extends JPanel {
         add(startButton);
         add(stopButton);
         add(shuffleButton);
-        add(newValuePanel);
+        add(barsAmountPanel);
+        add(stepDelayPanel);
         add(stepCounterPanel);
     }
 
@@ -58,6 +64,7 @@ public class ControlPanel extends JPanel {
                 sortingController.start();
                 setAllDisabled();
                 stopButton.setEnabled(true);
+                stepDelayPanel.setEnabled(true);
             }
         });
     }
@@ -83,18 +90,34 @@ public class ControlPanel extends JPanel {
         });
     }
 
+    private void configureBarsAmountPanel() {
+        barsAmountPanel.setLabelText("Bars amount");
+        barsAmountPanel.setValue(ApplicationProperties.STARTUP_BARS_AMOUNT);
+        barsAmountPanel.setMinValue(ApplicationProperties.MIN_BAR_AMOUNT);
+        barsAmountPanel.setMaxValue(ApplicationProperties.MAX_BAR_AMOUNT);
+    }
+
+    private void configureStepDelayPanel() {
+        stepDelayPanel.setLabelText("Step delay");
+        stepDelayPanel.setValue(ApplicationProperties.STARTUP_STEP_DELAY);
+        stepDelayPanel.setMinValue(ApplicationProperties.MIN_STEP_DELAY);
+        stepDelayPanel.setMaxValue(ApplicationProperties.MAX_STEP_DELAY);
+    }
+
     private void setAllDisabled() {
         startButton.setEnabled(false);
         stopButton.setEnabled(false);
         shuffleButton.setEnabled(false);
-        newValuePanel.setEnabled(false);
+        barsAmountPanel.setEnabled(false);
+        stepDelayPanel.setEnabled(false);
     }
 
     private void setAllEnabled() {
         startButton.setEnabled(true);
         stopButton.setEnabled(true);
         shuffleButton.setEnabled(true);
-        newValuePanel.setEnabled(true);
+        barsAmountPanel.setEnabled(true);
+        stepDelayPanel.setEnabled(true);
     }
 
 }

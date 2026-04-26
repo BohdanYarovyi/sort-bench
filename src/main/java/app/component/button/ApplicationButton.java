@@ -19,7 +19,7 @@ public abstract class ApplicationButton extends JButton {
 
     public static final Stroke DEFAULT_BORDER_STROKE = new BasicStroke(3);
 
-    private Color borderColor = new Color(0, 0, 0);
+    private Color borderColor = Color.BLACK;
 
     public ApplicationButton(String text) {
         super(text);
@@ -75,28 +75,28 @@ public abstract class ApplicationButton extends JButton {
         borderColor = colors.border;
     }
 
-    private void drawBackground(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g.create();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    private void drawBackground(Graphics graphics) {
+        Graphics2D g = (Graphics2D) graphics.create();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         Shape backgroundShape = getButtonBackgroundShape();
-        g2.setColor(getBackground());
-        g2.fill(backgroundShape);
-        g2.dispose();
+        g.setColor(getBackground());
+        g.fill(backgroundShape);
+        g.dispose();
     }
 
     @Override
-    protected void paintBorder(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g.create();
+    protected void paintBorder(Graphics graphics) {
+        Graphics2D g = (Graphics2D) graphics.create();
 
         if (isBorderPainted()) {
             Shape backgroundShape = getButtonBackgroundShape();
-            g2.setColor(getBorderColor());
-            g2.setStroke(getBorderStroke());
-            g2.draw(backgroundShape);
+            g.setColor(getBorderColor());
+            g.setStroke(getBorderStroke());
+            g.draw(backgroundShape);
         }
 
-        g2.dispose();
+        g.dispose();
     }
 
     @Override

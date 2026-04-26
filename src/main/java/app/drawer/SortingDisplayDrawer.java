@@ -24,29 +24,29 @@ public class SortingDisplayDrawer {
 
     public void drawBars(List<Bar> bars, Graphics graphics) {
         for (Bar bar : bars) {
-            drawBody(bar, graphics.create());
-            drawBorder(bar, graphics.create());
-            drawLabel(bar, graphics.create());
+            drawBody(bar, graphics);
+            drawBorder(bar, graphics);
+            drawLabel(bar, graphics);
         }
     }
 
-    private void drawBody(Bar bar, Graphics g) {
-        Graphics2D graphics = (Graphics2D) g;
+    private void drawBody(Bar bar, Graphics graphics) {
+        Graphics2D g = (Graphics2D) graphics.create();
         Color innerColor = bar.getInnerColor();
         Rectangle2D.Double rectangle = toRectangle(bar);
 
-        graphics.setColor(innerColor);
-        graphics.fill(rectangle);
+        g.setColor(innerColor);
+        g.fill(rectangle);
     }
 
-    private void drawBorder(Bar bar, Graphics g) {
-        Graphics2D graphics = (Graphics2D) g;
+    private void drawBorder(Bar bar, Graphics graphics) {
+        Graphics2D g = (Graphics2D) graphics.create();
         Color borderColor = bar.getBorderColor();
         Rectangle2D.Double rectangle = toRectangle(bar);
 
-        graphics.setStroke(DEFAULT_BORDER_STOKE);
-        graphics.setColor(borderColor);
-        graphics.draw(rectangle);
+        g.setStroke(DEFAULT_BORDER_STOKE);
+        g.setColor(borderColor);
+        g.draw(rectangle);
     }
 
     private Rectangle2D.Double toRectangle(Bar bar) {
@@ -58,17 +58,17 @@ public class SortingDisplayDrawer {
         return new Rectangle2D.Double(x, y, w, h);
     }
 
-    private void drawLabel(Bar bar, Graphics g) {
-        Graphics2D graphics = (Graphics2D) g;
+    private void drawLabel(Bar bar, Graphics graphics) {
+        Graphics2D g = (Graphics2D) graphics.create();
         String text = String.valueOf(bar.getValue());
         Dimension2D barSize = bar.getBarSize();
         Point2D barPosition = bar.getBarPosition();
-        FontRenderContext frc = graphics.getFontRenderContext();
+        FontRenderContext frc = g.getFontRenderContext();
         Font font = fontManager.createFont(barSize.getWidth());
         Point2D position = labelAlignmentProcessor.findLabelPosition(text, font, barPosition, barSize, frc);
 
-        graphics.setFont(font);
-        graphics.drawString(text, (float) position.getX(), (float) position.getY());
+        g.setFont(font);
+        g.drawString(text, (float) position.getX(), (float) position.getY());
     }
 
     private static class FontManager {

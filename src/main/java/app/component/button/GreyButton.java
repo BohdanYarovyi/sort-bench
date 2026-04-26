@@ -13,7 +13,7 @@ public class GreyButton extends ApplicationButton {
 
     @Override
     public Dimension getButtonSize() {
-        return size != null ? size : super.getButtonSize();
+        return size;
     }
 
     @Override

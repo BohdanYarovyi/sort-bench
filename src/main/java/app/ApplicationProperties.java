@@ -9,11 +9,17 @@ public interface ApplicationProperties {
 
     int APPLICATION_FONT_SIZE = 28;
 
-    int STARTUP_BAR_AMOUNT = 20;
+    int STARTUP_BARS_AMOUNT = 20;
+
+    int STARTUP_STEP_DELAY = 200;
 
     int MIN_BAR_AMOUNT = 5;
 
     int MAX_BAR_AMOUNT = 100;
+
+    int MIN_STEP_DELAY = 10;
+
+    int MAX_STEP_DELAY = 10_000;
 
     float FRAME_WIDTH_DELTA = 0.75f;
 
@@ -25,7 +31,9 @@ public interface ApplicationProperties {
 
     Color BAR_IDLE_COLOR = new Color(151, 151, 151);
 
-    Color BAR_PICK_COLOR = new Color(255, 40, 40);
+    Color BAR_PEEK_COLOR = new Color(220, 220, 220);
+
+    Color BAR_SWAP_COLOR = new Color(255, 40, 40);
 
     Color BAR_BORDER_COLOR = new Color(0,0,0);
 
@@ -36,4 +44,5 @@ public interface ApplicationProperties {
 
         return new Font(fontFamily, fontStyle, fontSize);
     }
+
 }

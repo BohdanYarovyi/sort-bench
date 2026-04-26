@@ -2,36 +2,36 @@ package app.component.textField;
 
 import app.ApplicationProperties;
 import app.exception.IntegerBoundsViolationException;
+import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.NumberFormat;
 
-public class NewAmountField extends JFormattedTextField {
-    private static final int MIN_VALUE = ApplicationProperties.MIN_BAR_AMOUNT;
-
-    private static final int MAX_VALUE = ApplicationProperties.MAX_BAR_AMOUNT;
+@Setter
+public class OnlyIntegerField extends JFormattedTextField {
+    private static final NumberFormat DEFAULT_FORMATTER = NumberFormat.getIntegerInstance();
 
     private static final Font DEFAULT_FONT = ApplicationProperties.getDefaultFont();
 
-    private static final NumberFormat DEFAULT_FORMATTER = NumberFormat.getIntegerInstance();
+    private int minValue = 0;
 
-    public NewAmountField(int columns) {
+    private int maxValue = 0;
+
+    public OnlyIntegerField() {
         super(DEFAULT_FORMATTER);
 
-        configure(columns);
+        configure();
     }
 
-    private void configure(int columns) {
-        setColumns(columns);
+    private void configure() {
         setFont(DEFAULT_FONT);
-        setValue(ApplicationProperties.STARTUP_BAR_AMOUNT);
     }
 
     public int getValidValue() throws IntegerBoundsViolationException {
         int value = ((Number) getValue()).intValue();
 
-        if (value > MAX_VALUE || value < MIN_VALUE) {
+        if (value < minValue || value > maxValue) {
             throw new IntegerBoundsViolationException();
         }
 

@@ -7,6 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ApplicationWindow extends JFrame {
+    private final AlgorithmCollectionPanel algorithmCollectionPanel;
+
+    private final AlgorithmDashboardPanel algorithmDashboardPanel;
+
     private final Dimension userScreenSize;
 
     private final Dimension initialSize;
@@ -14,9 +18,11 @@ public class ApplicationWindow extends JFrame {
     private final Dimension minimumSize;
 
     public ApplicationWindow() {
-        userScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        initialSize = getInitialFrameSize();
-        minimumSize = getMinimumFrameSize();
+        this.algorithmCollectionPanel = new AlgorithmCollectionPanel();
+        this.algorithmDashboardPanel = new AlgorithmDashboardPanel();
+        this.userScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.initialSize = getInitialFrameSize();
+        this.minimumSize = getMinimumFrameSize();
 
         customizeFrame();
         configurePanels();
@@ -33,9 +39,9 @@ public class ApplicationWindow extends JFrame {
 
     private void configurePanels() {
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPane.setLeftComponent(new AlgorithmCollectionPanel());
-        splitPane.setRightComponent(new AlgorithmDashboardPanel());
-        splitPane.setResizeWeight(0.35);
+        splitPane.setLeftComponent(algorithmCollectionPanel);
+        splitPane.setRightComponent(algorithmDashboardPanel);
+        splitPane.setResizeWeight(0.60);
         splitPane.setBorder(null);
 
         add(splitPane, BorderLayout.CENTER);
