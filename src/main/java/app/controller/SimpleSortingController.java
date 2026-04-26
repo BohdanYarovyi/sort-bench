@@ -1,58 +1,73 @@
 package app.controller;
 
+import app.listener.UpdateBarsOnScreenListener;
+import app.listener.UpdateStepCounterListener;
 import app.model.Bar;
 import app.model.SortingContext;
-import app.panel.SortingDisplayPanel;
 import app.util.SortAlgorithm;
 import app.util.SortingCollection.Action;
 import app.util.impl.BubbleSortAlgorithm;
+import lombok.Setter;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.atomic.AtomicInteger;
 
-/*
-    TODO: Controller must be reworked and added more methods for operating on display
-          Not each public method can be used for buttons on the screen,
-          but it is useful to have public methods for controlling algorithm display
- */
 public class SimpleSortingController implements SortingController {
-    private final SortingDisplayPanel display;
 
     private SortingContext sortingContext;
 
-    public SimpleSortingController(SortingDisplayPanel display) {
-        this.display = display;
+    private Timer timer;
 
-        sortingContext = new SortingContext(50);
-    }
+    @Setter
+    private UpdateBarsOnScreenListener updateBarsOnScreenListener;
+
+    @Setter
+    private UpdateStepCounterListener updateStepCounterListener;
 
     @Override
     public void start() {
         SortAlgorithm bubbleSort = new BubbleSortAlgorithm();
         Queue<Action> actions = sortingContext.sort(bubbleSort);
 
+        int allSteps = actions.size();
+        AtomicInteger counter = new AtomicInteger(0);
         List<Bar> bars = sortingContext.getBars();
-        Timer t = new Timer(200, null);
-        t.addActionListener(e -> {
+        timer = new Timer(200, e -> {
             if (actions.isEmpty()) {
-                t.stop();
+                timer.stop();
                 return;
             }
 
             Action action = actions.remove();
             action.perform(bars);
-            display.update(bars);
+            counter.incrementAndGet();
+
+            updateBarsOnScreenListener.update(bars);
+            updateStepCounterListener.update(counter.get(), allSteps);
         });
-        t.start();
+        timer.start();
     }
 
     @Override
     public void shuffle() {
         sortingContext.shuffle();
         List<Bar> bars = sortingContext.getBars();
-        display.update(bars);
+        updateBarsOnScreenListener.update(bars);
+    }
+
+    @Override
+    public void stop() {
+        if (timer != null) {
+            timer.stop();
+        }
+    }
+
+    @Override
+    public void initNewAmount(int amount) {
+        sortingContext = new SortingContext(amount);
+        updateBarsOnScreenListener.update(sortingContext.getBars());
     }
 
 }

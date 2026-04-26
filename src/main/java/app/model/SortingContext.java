@@ -3,14 +3,15 @@ package app.model;
 import app.util.SortAlgorithm;
 import app.util.SortingCollection;
 import app.util.SortingCollection.Action;
+import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@Getter
 public class SortingContext {
     private final List<Integer> initialData;
 
@@ -43,14 +44,6 @@ public class SortingContext {
         sortAlgorithm.sort(sortingCollection);
 
         return sortingCollection.getActions();
-    }
-
-    public List<Integer> getInitialData() {
-        return initialData;
-    }
-
-    public List<Bar> getBars() {
-        return bars;
     }
 
 }

@@ -1,58 +1,56 @@
 package app.panel;
 
+import app.ApplicationProperties;
 import app.controller.SimpleSortingController;
-import app.controller.SortingController;
-import app.drawer.SortingDisplayDrawer;
-import app.controller.BarAlignmentController;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class AlgorithmDashboardPanel extends JPanel {
-    private final SortingDisplayPanel sortingDisplayPanel;
-
-    private final StatisticMonitorPanel statisticMonitorPanel;
-
-    private final SortingController sortingController;
-
     private final GridBagConstraintConfigurator configurator;
 
+    private final SortingDisplayPanel sortingDisplayPanel;
+
+    private final ControlPanel controlPanel;
+
     public AlgorithmDashboardPanel() {
-        sortingDisplayPanel = new SortingDisplayPanel();
-        sortingController = new SimpleSortingController(sortingDisplayPanel);
-        statisticMonitorPanel = new StatisticMonitorPanel(sortingController);
+        SimpleSortingController sortingController = new SimpleSortingController();
         configurator = new GridBagConstraintConfigurator();
+        sortingDisplayPanel = new SortingDisplayPanel(sortingController);
+        controlPanel = new ControlPanel(sortingController);
 
         configurePanels();
-        sortingController.shuffle();  // temporary
+        sortingController.initNewAmount(ApplicationProperties.STARTUP_BAR_AMOUNT);
     }
 
     private void configurePanels() {
-        GridBagLayout layout = new GridBagLayout();
-        GridBagConstraints sortingDisplayConstraints = configurator.getSortingDisplayConstraints();
-        GridBagConstraints statisticMonitorConstraints = configurator.getStatisticMonitorConstraints();
+        setLayout(new GridBagLayout());
 
-        setLayout(layout);
+        GridBagConstraints sortingDisplayConstraints = configurator.getSortingDisplayConstraints();
         add(sortingDisplayPanel, sortingDisplayConstraints);
-        add(statisticMonitorPanel, statisticMonitorConstraints);
+
+        GridBagConstraints controlPanelConstraints = configurator.getControlPanelConstraints();
+        add(controlPanel, controlPanelConstraints);
     }
 
     private static class GridBagConstraintConfigurator {
+        // sorting display
         private static final int SORTING_DISPLAY_POS_X = 0;
 
         private static final int SORTING_DISPLAY_POS_Y = 0;
 
         private static final double SORTING_DISPLAY_WEIGHT_X = 1.0;
 
-        private static final double SORTING_DISPLAY_WEIGHT_Y = 0.7;
+        private static final double SORTING_DISPLAY_WEIGHT_Y = 0.85;
 
-        private static final int STATISTIC_MONITOR_POS_X = 0;
+        // control panel
+        private static final int CONTROL_PANEL_POS_X = 0;
 
-        private static final int STATISTIC_MONITOR_POS_Y = 1;
+        private static final int CONTROL_PANEL_POS_Y = 1;
 
-        private static final double STATISTIC_MONITOR_WEIGHT_X = 1.0;
+        private static final double CONTROL_PANEL_WEIGHT_X = 1.0;
 
-        private static final double STATISTIC_MONITOR_WEIGHT_Y = 0.3;
+        private static final double CONTROL_PANEL_WEIGHT_Y = 0.15;
 
         private GridBagConstraints getSortingDisplayConstraints() {
             GridBagConstraints constraints = new GridBagConstraints();
@@ -65,12 +63,12 @@ public class AlgorithmDashboardPanel extends JPanel {
             return constraints;
         }
 
-        private GridBagConstraints getStatisticMonitorConstraints() {
+        private GridBagConstraints getControlPanelConstraints() {
             GridBagConstraints constraints = new GridBagConstraints();
-            constraints.gridx = STATISTIC_MONITOR_POS_X;
-            constraints.gridy = STATISTIC_MONITOR_POS_Y;
-            constraints.weightx = STATISTIC_MONITOR_WEIGHT_X;
-            constraints.weighty = STATISTIC_MONITOR_WEIGHT_Y;
+            constraints.gridx = CONTROL_PANEL_POS_X;
+            constraints.gridy = CONTROL_PANEL_POS_Y;
+            constraints.weightx = CONTROL_PANEL_WEIGHT_X;
+            constraints.weighty = CONTROL_PANEL_WEIGHT_Y;
             constraints.fill = GridBagConstraints.BOTH;
 
             return constraints;

@@ -6,6 +6,10 @@ public interface SortingController {
 
     void shuffle();
 
+    void stop();
+
+    void initNewAmount(int amount);
+
 
 
 }

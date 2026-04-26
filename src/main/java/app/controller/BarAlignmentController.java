@@ -3,7 +3,6 @@ package app.controller;
 import app.model.Bar;
 import app.model.DoubleDimension;
 
-import java.awt.font.FontRenderContext;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.List;

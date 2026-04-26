@@ -7,6 +7,14 @@ public interface ApplicationProperties {
 
     String APPLICATION_FONT = "Times New Roman";
 
+    int APPLICATION_FONT_SIZE = 28;
+
+    int STARTUP_BAR_AMOUNT = 20;
+
+    int MIN_BAR_AMOUNT = 5;
+
+    int MAX_BAR_AMOUNT = 100;
+
     float FRAME_WIDTH_DELTA = 0.75f;
 
     float FRAME_HEIGHT_DELTA = 0.75f;
@@ -20,4 +28,12 @@ public interface ApplicationProperties {
     Color BAR_PICK_COLOR = new Color(255, 40, 40);
 
     Color BAR_BORDER_COLOR = new Color(0,0,0);
+
+    static Font getDefaultFont() {
+        String fontFamily = ApplicationProperties.APPLICATION_FONT;
+        int fontSize = ApplicationProperties.APPLICATION_FONT_SIZE;
+        int fontStyle = Font.PLAIN;
+
+        return new Font(fontFamily, fontStyle, fontSize);
+    }
 }
