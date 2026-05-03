@@ -1,10 +1,11 @@
 package app.panel;
 
 import app.controller.SimpleSortingController;
+import app.drawer.SortingDisplayHintDrawer;
 import app.listener.UpdateBarsOnScreenListener;
 import lombok.Getter;
 import app.controller.BarAlignmentController;
-import app.drawer.SortingDisplayDrawer;
+import app.drawer.SortingDisplayBarDrawer;
 import app.model.Bar;
 
 import javax.swing.*;
@@ -15,7 +16,9 @@ import java.util.List;
 public class SortingDisplayPanel extends JPanel implements UpdateBarsOnScreenListener {
     private final BarAlignmentController alignmentController;
 
-    private final SortingDisplayDrawer sortingDisplayDrawer;
+    private final SortingDisplayBarDrawer sortingDisplayBarDrawer;
+
+    private final SortingDisplayHintDrawer sortingDisplayHintDrawer;
 
     private final SimpleSortingController sortingController;
 
@@ -24,7 +27,8 @@ public class SortingDisplayPanel extends JPanel implements UpdateBarsOnScreenLis
     public SortingDisplayPanel(SimpleSortingController sortingController) {
         this.sortingController = sortingController;
         this.alignmentController = new BarAlignmentController();
-        this.sortingDisplayDrawer = new SortingDisplayDrawer();
+        this.sortingDisplayBarDrawer = new SortingDisplayBarDrawer();
+        this.sortingDisplayHintDrawer = new SortingDisplayHintDrawer();
 
         configure();
         sortingController.setUpdateBarsOnScreenListener(this);
@@ -46,7 +50,8 @@ public class SortingDisplayPanel extends JPanel implements UpdateBarsOnScreenLis
 
         if (bars != null) {
             alignmentController.align(bars, getSize());
-            sortingDisplayDrawer.drawBars(bars, g.create());
+            sortingDisplayBarDrawer.drawBars(bars, g.create());
+            sortingDisplayHintDrawer.drawHints(g.create());
         }
     }
 

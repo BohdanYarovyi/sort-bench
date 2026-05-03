@@ -31,6 +31,16 @@
     algorithm execution process (what current delay, what status {sorted, unsorted}, steps,
     what algorithm is using, ).
 [-] Place all components on the pane
-[-] Implement algorithm collection pane
+[+] Add hints on sorting screen
+[~] Implement algorithm collection pane
+  [+] Add scrollable list
+  [+] Add default algorithms
+  [+] Add algorithm chose button
+  [+] Allow choose algorithm in runtime
+  [-] Allow user to add custom .class file with implementation of SortAlgorithm
+    [-] Add button for choosing new algorithm from file directory
+    [-] Create external API for using it for creating external .class files
+    [-] Create a few algorithms with external API
+  [-] Refactor code
 [-] Create LIB for adding any sorting algorithm to program
 [-] ... (add new ones after reviewing the project)

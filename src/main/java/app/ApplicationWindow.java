@@ -18,11 +18,13 @@ public class ApplicationWindow extends JFrame {
     private final Dimension minimumSize;
 
     public ApplicationWindow() {
-        this.algorithmCollectionPanel = new AlgorithmCollectionPanel();
-        this.algorithmDashboardPanel = new AlgorithmDashboardPanel();
-        this.userScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.initialSize = getInitialFrameSize();
-        this.minimumSize = getMinimumFrameSize();
+        algorithmCollectionPanel = new AlgorithmCollectionPanel();
+        algorithmDashboardPanel = new AlgorithmDashboardPanel();
+        userScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        initialSize = getInitialFrameSize();
+        minimumSize = getMinimumFrameSize();
+
+        algorithmCollectionPanel.setSelectSortAlgorithmListener(algorithmDashboardPanel);
 
         customizeFrame();
         configurePanels();

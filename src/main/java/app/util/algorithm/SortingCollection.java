@@ -1,4 +1,4 @@
-package app.util;
+package app.util.algorithm;
 
 import app.model.Bar;
 
@@ -28,6 +28,18 @@ public class SortingCollection {
         elements.set(index2, temp);
 
         actions.add(new SwapAction(index1, index2));
+    }
+
+    public void set(int index, int value) {
+        elements.set(index, value);
+
+        actions.add(new SetAction(index, value));
+    }
+
+    public Integer peek(int index) {
+        actions.add(new PeekAction(index));
+
+        return elements.get(index);
     }
 
     public int getSize() {
@@ -82,8 +94,40 @@ public class SortingCollection {
             Bar bar1 = elements.get(index1);
             Bar bar2 = elements.get(index2);
 
-            bar1.setPeeked();
-            bar2.setPeeked();
+            bar1.setCompared();
+            bar2.setCompared();
+        }
+
+    }
+
+    private static class PeekAction implements Action {
+        private final Integer index;
+
+        private PeekAction(Integer index) {
+            this.index = index;
+        }
+
+        @Override
+        public void perform(List<Bar> elements) {
+            elements.get(index).setPeeked();
+        }
+
+    }
+
+    private static class SetAction implements Action {
+        private final Integer index;
+        private final Integer value;
+
+        private SetAction(Integer index, Integer value) {
+            this.index = index;
+            this.value = value;
+        }
+
+
+        @Override
+        public void perform(List<Bar> elements) {
+            elements.set(index, new Bar(value));
+            elements.get(index).setSet();
         }
 
     }

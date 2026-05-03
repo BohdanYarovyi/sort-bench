@@ -10,14 +10,14 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-public class SortingDisplayDrawer {
+public class SortingDisplayBarDrawer {
     private static final Stroke DEFAULT_BORDER_STOKE = new BasicStroke(2);
 
     private final FontManager fontManager;
 
     private final LabelAlignmentProcessor labelAlignmentProcessor;
 
-    public SortingDisplayDrawer() {
+    public SortingDisplayBarDrawer() {
         fontManager = new FontManager();
         labelAlignmentProcessor = new LabelAlignmentProcessor();
     }

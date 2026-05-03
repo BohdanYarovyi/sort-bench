@@ -2,25 +2,30 @@ package app.panel;
 
 import app.ApplicationProperties;
 import app.controller.SimpleSortingController;
+import app.listener.SelectSortAlgorithmListener;
+import app.util.algorithm.SortAlgorithm;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class AlgorithmDashboardPanel extends JPanel {
+public class AlgorithmDashboardPanel extends JPanel implements SelectSortAlgorithmListener {
     private final GridBagConstraintConfigurator configurator;
+
+    private final SimpleSortingController sortingController;
 
     private final SortingDisplayPanel sortingDisplayPanel;
 
     private final ControlPanel controlPanel;
 
     public AlgorithmDashboardPanel() {
-        SimpleSortingController sortingController = new SimpleSortingController();
         configurator = new GridBagConstraintConfigurator();
+        sortingController = new SimpleSortingController();
         sortingDisplayPanel = new SortingDisplayPanel(sortingController);
         controlPanel = new ControlPanel(sortingController);
 
         configurePanels();
         sortingController.setBarsAmount(ApplicationProperties.STARTUP_BARS_AMOUNT);
+        sortingController.setSortAlgorithm(ApplicationProperties.DEFAULT_SORT_ALGORITHM);
     }
 
     private void configurePanels() {
@@ -31,6 +36,11 @@ public class AlgorithmDashboardPanel extends JPanel {
 
         GridBagConstraints controlPanelConstraints = configurator.getControlPanelConstraints();
         add(controlPanel, controlPanelConstraints);
+    }
+
+    @Override
+    public void setNewAlgorithm(SortAlgorithm sortAlgorithm) {
+        sortingController.setSortAlgorithm(sortAlgorithm);
     }
 
     private static class GridBagConstraintConfigurator {

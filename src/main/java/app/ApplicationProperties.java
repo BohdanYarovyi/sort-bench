@@ -1,5 +1,8 @@
 package app;
 
+import app.util.algorithm.SortAlgorithm;
+import app.util.algorithm.impl.BubbleSortAlgorithm;
+
 import java.awt.*;
 
 public interface ApplicationProperties {
@@ -11,7 +14,7 @@ public interface ApplicationProperties {
 
     int STARTUP_BARS_AMOUNT = 20;
 
-    int STARTUP_STEP_DELAY = 200;
+    int STARTUP_STEP_DELAY = 150;
 
     int MIN_BAR_AMOUNT = 5;
 
@@ -31,11 +34,17 @@ public interface ApplicationProperties {
 
     Color BAR_IDLE_COLOR = new Color(151, 151, 151);
 
-    Color BAR_PEEK_COLOR = new Color(220, 220, 220);
+    Color BAR_COMPARE_COLOR = new Color(220, 220, 220);
 
     Color BAR_SWAP_COLOR = new Color(255, 40, 40);
 
+    Color BAR_PEEK_COLOR = new Color(5, 98, 189);
+
+    Color BAR_SET_COLOR = new Color(0, 108, 22);
+
     Color BAR_BORDER_COLOR = new Color(0,0,0);
+
+    SortAlgorithm DEFAULT_SORT_ALGORITHM = new BubbleSortAlgorithm();
 
     static Font getDefaultFont() {
         String fontFamily = ApplicationProperties.APPLICATION_FONT;

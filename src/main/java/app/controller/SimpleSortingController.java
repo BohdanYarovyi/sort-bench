@@ -5,10 +5,9 @@ import app.listener.UpdateBarsOnScreenListener;
 import app.listener.UpdateStepCounterListener;
 import app.model.Bar;
 import app.model.SortingContext;
-import app.util.SortAlgorithm;
-import app.util.SortingCollection;
-import app.util.SortingCollection.Action;
-import app.util.impl.BubbleSortAlgorithm;
+import app.util.algorithm.SortAlgorithm;
+import app.util.algorithm.SortingCollection;
+import app.util.algorithm.SortingCollection.Action;
 import lombok.Setter;
 
 import javax.swing.*;
@@ -16,9 +15,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 public class SimpleSortingController implements SortingController {
+    @Setter
+    private SortAlgorithm sortAlgorithm;
+
     private SortingContext context;
 
     private Timer timer;
@@ -33,8 +34,7 @@ public class SimpleSortingController implements SortingController {
 
     @Override
     public void start() {
-        SortAlgorithm bubbleSort = new BubbleSortAlgorithm();
-        Queue<Action> actions = sort(bubbleSort);
+        Queue<Action> actions = sort(sortAlgorithm);
 
         int allSteps = actions.size();
         AtomicInteger counter = new AtomicInteger(0);
@@ -57,6 +57,7 @@ public class SimpleSortingController implements SortingController {
 
     @Override
     public void shuffle() {
+        context.refreshBars();
         List<Bar> bars = context.getBars();
         Collections.shuffle(bars);
         updateBarsOnScreenListener.update(bars);

@@ -34,7 +34,7 @@ public class SortingContext {
     }
 
     public void refreshBars() {
-        bars.forEach(Bar::setUnpeeked);
+        bars.forEach(Bar::setIdle);
     }
 
 }
