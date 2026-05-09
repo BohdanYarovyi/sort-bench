@@ -22,7 +22,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.maybyes</groupId>
-			<artifactId>sort-bench-lib</artifactId>
+			<artifactId>sort-bench-abstraction</artifactId>
 			<version>1.0</version>
 		</dependency>
 	</dependencies>
