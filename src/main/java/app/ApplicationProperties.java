@@ -1,7 +1,7 @@
 package app;
 
-import app.util.algorithm.SortAlgorithm;
 import app.util.algorithm.impl.BubbleSortAlgorithm;
+import com.maybyes.sortbench.lib.SortAlgorithm;
 
 import java.awt.*;
 

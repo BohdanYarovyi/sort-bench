@@ -2,15 +2,15 @@
   [+] Create window frame
   [+] Make window and panels resizable
   [+] Implement visualization display
-    [+] Resizable bars
-    [+] Resizable bar labels with value
+    [+] Resizable actionResponsives
+    [+] Resizable actionResponsive labels with value
   [+] Implement MVP statistic display
     [+] Place button 'Start'
     [+] Place button 'Stop'
 [+] Integrate multi-algorithmic choice
   [+] Write 'Bubble sort'
-  [+] Force it to sort bars on click buttons
-  [+] Create structure of date for manipulate list of data and change bar state
+  [+] Force it to sort actionResponsives on click buttons
+  [+] Create structure of date for manipulate list of data and change actionResponsive state
     [+] Find out a structure of data that can work with this system
 [+] Clean up the project
   [+] Refactor panel management
@@ -19,7 +19,7 @@
      [+] Refactor SortingDisplayPanel
      [+] Refactor StatisticMonitorPanel
      [+] Reorganize them using GridBagLayoutManager instead of custom AdaptivePanel abstract class
-  [+] Refactor BarAlignmentController and SortingDisplayDrawer to show bars more accuracy
+  [+] Refactor BarAlignmentController and SortingDisplayDrawer to show actionResponsives more accuracy
 [+] Rework SimpleSortingController and add more methods on it
   [+] Add changing amount of components
   [+] Add step counter
@@ -39,7 +39,7 @@
   [+] Allow choose algorithm in runtime
   [-] Allow user to add custom .class file with implementation of SortAlgorithm
     [-] Add button for choosing new algorithm from file directory
-    [-] Create external API for using it for creating external .class files
+    [+] Create external API for using it for creating external .class files
     [-] Create a few algorithms with external API
   [-] Refactor code
 [-] Create LIB for adding any sorting algorithm to program

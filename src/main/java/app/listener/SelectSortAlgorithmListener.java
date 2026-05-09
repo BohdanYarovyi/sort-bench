@@ -1,6 +1,6 @@
 package app.listener;
 
-import app.util.algorithm.SortAlgorithm;
+import com.maybyes.sortbench.lib.SortAlgorithm;
 
 public interface SelectSortAlgorithmListener {
 

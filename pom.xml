@@ -20,6 +20,11 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.42</version>
 		</dependency>
+		<dependency>
+			<groupId>com.maybyes</groupId>
+			<artifactId>sort-bench-lib</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 
 </project>

@@ -3,7 +3,7 @@ package app.panel;
 import app.ApplicationProperties;
 import app.controller.SimpleSortingController;
 import app.listener.SelectSortAlgorithmListener;
-import app.util.algorithm.SortAlgorithm;
+import com.maybyes.sortbench.lib.SortAlgorithm;
 
 import javax.swing.*;
 import java.awt.*;

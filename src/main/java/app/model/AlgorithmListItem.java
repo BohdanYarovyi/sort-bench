@@ -1,8 +1,8 @@
 package app.model;
 
-import app.util.algorithm.SortAlgorithm;
 import lombok.Getter;
 import lombok.Setter;
+import com.maybyes.sortbench.lib.SortAlgorithm;
 
 @Getter
 @Setter

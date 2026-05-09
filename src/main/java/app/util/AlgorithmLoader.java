@@ -1,6 +1,6 @@
 package app.util;
 
-import app.util.algorithm.SortAlgorithm;
+import com.maybyes.sortbench.lib.SortAlgorithm;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,9 +17,9 @@ public class AlgorithmLoader {
 
        algorithms.forEach(sortAlgorithm -> {
            String oldName = sortAlgorithm.getName();
-           String suffix = "(Default)";
+           String prefix = "(Default)";
 
-           sortAlgorithm.setName(oldName + " " + suffix);
+           sortAlgorithm.setName(prefix + " " + oldName);
        });
 
        return algorithms;

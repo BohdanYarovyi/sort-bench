@@ -5,10 +5,10 @@ import app.listener.UpdateBarsOnScreenListener;
 import app.listener.UpdateStepCounterListener;
 import app.model.Bar;
 import app.model.SortingContext;
-import app.util.algorithm.SortAlgorithm;
-import app.util.algorithm.SortingCollection;
-import app.util.algorithm.SortingCollection.Action;
+import app.util.algorithm.SortingCollectionImpl;
+import app.util.algorithm.action.Action;
 import lombok.Setter;
+import com.maybyes.sortbench.lib.SortAlgorithm;
 
 import javax.swing.*;
 import java.util.Collections;
@@ -87,7 +87,7 @@ public class SimpleSortingController implements SortingController {
 
     private Queue<Action> sort(SortAlgorithm sortAlgorithm) {
         List<Integer> values = context.getBarsValues();
-        SortingCollection sortingCollection = new SortingCollection(values);
+        SortingCollectionImpl sortingCollection = new SortingCollectionImpl(values);
         sortAlgorithm.sort(sortingCollection);
 
         return sortingCollection.getActions();

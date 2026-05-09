@@ -1,7 +1,7 @@
 package app.util.algorithm.impl;
 
-import app.util.algorithm.SortAlgorithm;
-import app.util.algorithm.SortingCollection;
+import com.maybyes.sortbench.lib.SortAlgorithm;
+import com.maybyes.sortbench.lib.SortingCollection;
 
 public class MergeSortAlgorithm extends SortAlgorithm {
     private String name = "Merge Sort";
