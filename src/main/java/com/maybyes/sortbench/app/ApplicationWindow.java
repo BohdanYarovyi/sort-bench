@@ -20,11 +20,12 @@ public class ApplicationWindow extends JFrame {
     public ApplicationWindow() {
         algorithmCollectionPanel = new AlgorithmCollectionPanel();
         algorithmDashboardPanel = new AlgorithmDashboardPanel();
-        userScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        userScreenSize = ApplicationProperties.getUserScreenSize();
         initialSize = getInitialFrameSize();
         minimumSize = getMinimumFrameSize();
 
         algorithmCollectionPanel.setSelectSortAlgorithmListener(algorithmDashboardPanel);
+        algorithmCollectionPanel.configure();
 
         customizeFrame();
         configurePanels();
@@ -43,7 +44,7 @@ public class ApplicationWindow extends JFrame {
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setLeftComponent(algorithmCollectionPanel);
         splitPane.setRightComponent(algorithmDashboardPanel);
-        splitPane.setResizeWeight(0.60);
+        splitPane.setResizeWeight(0);
         splitPane.setBorder(null);
 
         add(splitPane, BorderLayout.CENTER);

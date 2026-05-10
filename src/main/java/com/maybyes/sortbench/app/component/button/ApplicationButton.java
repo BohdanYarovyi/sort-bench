@@ -17,7 +17,7 @@ public abstract class ApplicationButton extends JButton {
 
     public static final Integer DEFAULT_ARC_HEIGHT = 20;
 
-    public static final Stroke DEFAULT_BORDER_STROKE = new BasicStroke(3);
+    public static final Stroke DEFAULT_BORDER_STROKE = new BasicStroke(2);
 
     private Color borderColor = Color.BLACK;
 
@@ -135,20 +135,10 @@ public abstract class ApplicationButton extends JButton {
         return DEFAULT_BORDER_STROKE;
     }
 
-    @Getter
-    public static class ButtonColorTheme {
-        private final Color background;
-
-        private final Color foreground;
-
-        private final Color border;
-
-        public ButtonColorTheme(Color background, Color foreground, Color border) {
-            this.background = background;
-            this.foreground = foreground;
-            this.border = border;
-        }
-
-    }
+    public record ButtonColorTheme(
+            Color background,
+            Color foreground,
+            Color border
+    ) { }
 
 }

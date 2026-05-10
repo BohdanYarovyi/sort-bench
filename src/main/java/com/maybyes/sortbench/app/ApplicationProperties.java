@@ -10,7 +10,7 @@ public interface ApplicationProperties {
 
     String APPLICATION_FONT = "Times New Roman";
 
-    int APPLICATION_FONT_SIZE = 28;
+    int APPLICATION_FONT_SIZE = 20;
 
     int STARTUP_BARS_AMOUNT = 20;
 
@@ -52,6 +52,10 @@ public interface ApplicationProperties {
         int fontStyle = Font.PLAIN;
 
         return new Font(fontFamily, fontStyle, fontSize);
+    }
+
+    static Dimension getUserScreenSize() {
+        return Toolkit.getDefaultToolkit().getScreenSize();
     }
 
 }
