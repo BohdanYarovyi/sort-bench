@@ -56,16 +56,17 @@ public class SortingDisplayHintDrawer {
     public void drawHints(Graphics graphics) {
         Graphics2D g = (Graphics2D) graphics.create();
 
+        graphics.setFont(font);
         hintPointerPosition = PADDING_LEFT;
-        FontRenderContext fontRenderContext = g.getFontRenderContext();
         for (int i = 0; i < hints.length; i++) {
-            drawHint(i, fontRenderContext, g);
+            drawHint(i, g);
         }
     }
 
-    private void drawHint(int i, FontRenderContext fontRenderContext, Graphics2D g) {
+    private void drawHint(int i, Graphics2D g) {
         DisplayHint hint = hints[i];
-        double textWidth = font.getStringBounds(hint.labelText, fontRenderContext).getWidth();
+        FontMetrics fontMetrics = g.getFontMetrics();
+        double textWidth = fontMetrics.stringWidth(hint.labelText);
         RoundRectangle2D rectangle = new RoundRectangle2D.Float(hintPointerPosition, PADDING_TOP, RECTANGLE_SIZE, RECTANGLE_SIZE, 4.0f, 4.0f);
 
         g.setColor(hint.innnerColor);
