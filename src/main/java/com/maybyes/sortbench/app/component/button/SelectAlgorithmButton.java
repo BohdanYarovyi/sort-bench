@@ -2,31 +2,26 @@ package com.maybyes.sortbench.app.component.button;
 
 import java.awt.*;
 
-public class ChooseFileButton extends ApplicationButton {
-    private final static String TITLE = "Choose File";
+public class SelectAlgorithmButton extends ApplicationButton {
+    private final static String TITLE = "Select";
 
-    private final static int FONT_SIZE = 16;
+    private final static int FONT_SIZE = 20;
 
-    private final static int WIDTH = 120;
+    private final static int WIDTH = 140;
 
-    private final static int HEIGHT = 25;
+    private final static int HEIGHT = 30;
 
-    private final static int ARC_WIDTH = 10;
+    private final static int ARC_WIDTH = 13;
 
-    private final static int ARC_HEIGHT = 10;
+    private final static int ARC_HEIGHT = 13;
 
-    public ChooseFileButton() {
+    public SelectAlgorithmButton() {
         super(TITLE);
     }
 
     @Override
     public Dimension getButtonSize() {
         return new Dimension(WIDTH, HEIGHT);
-    }
-
-    @Override
-    public Font getFont() {
-        return super.getFont().deriveFont(Float.valueOf(FONT_SIZE));
     }
 
     @Override
@@ -37,6 +32,11 @@ public class ChooseFileButton extends ApplicationButton {
     @Override
     public Integer getArcHeight() {
         return ARC_HEIGHT;
+    }
+
+    @Override
+    public Font getFont() {
+        return super.getFont().deriveFont(Float.valueOf(FONT_SIZE));
     }
 
     @Override
@@ -65,4 +65,5 @@ public class ChooseFileButton extends ApplicationButton {
                 new Color(70, 70, 70)
         );
     }
+
 }

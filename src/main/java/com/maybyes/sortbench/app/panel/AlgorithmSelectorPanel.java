@@ -2,8 +2,8 @@ package com.maybyes.sortbench.app.panel;
 
 import com.maybyes.sortbench.abstraction.SortAlgorithm;
 import com.maybyes.sortbench.app.component.button.ApplicationButton;
-import com.maybyes.sortbench.app.component.button.ChooseFileButton;
-import com.maybyes.sortbench.app.component.button.GreyButton;
+import com.maybyes.sortbench.app.component.button.AddNewFileButton;
+import com.maybyes.sortbench.app.component.button.SelectAlgorithmButton;
 import com.maybyes.sortbench.app.component.dialog.ApplicationFileChooser;
 import com.maybyes.sortbench.app.listener.SelectSortAlgorithmListener;
 import com.maybyes.sortbench.app.model.AlgorithmListItem;
@@ -11,32 +11,28 @@ import com.maybyes.sortbench.app.util.algorithm.loader.BuiltinAlgorithmLoader;
 import com.maybyes.sortbench.app.util.algorithm.loader.FileChosenAlgorithmLoader;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+@Slf4j
 @Getter
 @Setter
-public class AlgorithmCollectionPanel extends JPanel {
-    private final static Dimension MINIMUM_SIZE = new Dimension(200, 0);
-
+public class AlgorithmSelectorPanel extends JPanel {
     private final static String LIST_TITLE = "Algorithms";
 
-    private final GridBagConstraintConfigurator configurator;
+    private final static Dimension MINIMUM_SIZE = new Dimension(200, 0);
+
+    private final GridBagConstraintFactory constraintsFactory;
 
     private final BuiltinAlgorithmLoader builtinAlgorithmLoader;
 
@@ -46,21 +42,21 @@ public class AlgorithmCollectionPanel extends JPanel {
 
     private final JList<AlgorithmListItem> selectionList;
 
-    private final ApplicationButton selectButton;
+    private final ApplicationButton selectItemButton;
 
     private final ApplicationButton addFileButton;
 
     private SelectSortAlgorithmListener selectSortAlgorithmListener;
 
-    public AlgorithmCollectionPanel() {
-        configurator = new GridBagConstraintConfigurator();
+    public AlgorithmSelectorPanel() {
+        constraintsFactory = new GridBagConstraintFactory();
         builtinAlgorithmLoader = new BuiltinAlgorithmLoader();
         fileChosenAlgorithmLoader = new FileChosenAlgorithmLoader();
 
         items = new DefaultListModel<>();
         selectionList = new JList<>(items);
-        selectButton = new GreyButton("Select", 150, 35);
-        addFileButton = new ChooseFileButton();
+        selectItemButton = new SelectAlgorithmButton();
+        addFileButton = new AddNewFileButton();
 
         loadBuiltinAlgorithms();
     }
@@ -73,6 +69,8 @@ public class AlgorithmCollectionPanel extends JPanel {
         configureSelectButton();
 
         setMinimumSize(MINIMUM_SIZE);
+
+        log.debug("{} was configured", getClass().getName());
     }
 
     private void configureSelectionList() {
@@ -80,38 +78,42 @@ public class AlgorithmCollectionPanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(selectionList);
         scrollPane.setBorder(new TitledBorder(LIST_TITLE));
 
-        GridBagConstraints constraints = configurator.getScrollPaneConstraints();
+        GridBagConstraints constraints = constraintsFactory.getScrollPaneConstraints();
         add(scrollPane, constraints);
     }
 
     private void configureAddFileButton() {
-        GridBagConstraints constraints = configurator.getAddFileButtonConstraints();
         AddFileButtonListener listener = new AddFileButtonListener(fileChosenAlgorithmLoader, items);
+        GridBagConstraints constraints = constraintsFactory.getAddFileButtonConstraints();
 
         addFileButton.addActionListener(listener);
         add(addFileButton, constraints);
     }
 
     private void configureSelectButton() {
-        GridBagConstraints constraints = configurator.getSelectButtonConstraints();
         SelectButtonListener listener = new SelectButtonListener(selectSortAlgorithmListener, selectionList);
+        GridBagConstraints constraints = constraintsFactory.getSelectItemButtonConstraints();
 
-        selectButton.addActionListener(listener);
-        add(selectButton, constraints);
+        selectItemButton.addActionListener(listener);
+        add(selectItemButton, constraints);
     }
 
     private void loadBuiltinAlgorithms() {
-        List<AlgorithmListItem> builtin = builtinAlgorithmLoader.load();
+        List<SortAlgorithm> loadedAlgorithms = builtinAlgorithmLoader.load();
+        List<AlgorithmListItem> loadedItems = loadedAlgorithms.stream()
+                .map(AlgorithmListItem::new)
+                .peek(AlgorithmListItem::markAsBuiltin)
+                .toList();
 
-        items.addAll(builtin);
+        items.addAll(loadedItems);
     }
 
     private static class AddFileButtonListener implements ActionListener {
-        private final ApplicationFileChooser fileChooser;
-
         private final FileChosenAlgorithmLoader loader;
 
         private final DefaultListModel<AlgorithmListItem> items;
+
+        private final ApplicationFileChooser fileChooser;
 
         private AddFileButtonListener(FileChosenAlgorithmLoader fileChosenAlgorithmLoader,
                                       DefaultListModel<AlgorithmListItem> defaultListModel) {
@@ -127,7 +129,10 @@ public class AlgorithmCollectionPanel extends JPanel {
 
             List<SortAlgorithm> algorithms = loader.load(files);
             List<AlgorithmListItem> newItems = convertToItems(algorithms);
-            loadToList(newItems);
+            addOnlyNew(newItems);
+
+            log.info("Were added {} new sorting algorithms to the selection list", newItems.size());
+            log.debug("Were added: {}", newItems);
         }
 
         private List<AlgorithmListItem> convertToItems(List<SortAlgorithm> algorithms) {
@@ -136,15 +141,13 @@ public class AlgorithmCollectionPanel extends JPanel {
                     .toList();
         }
 
-        private void loadToList(List<AlgorithmListItem> newItems) {
+        private void addOnlyNew(List<AlgorithmListItem> newItems) {
             List<AlgorithmListItem> currentItems = Collections.list(items.elements());
 
             Set<AlgorithmListItem> currentItemsSet = new TreeSet<>(currentItems);
             Set<AlgorithmListItem> newItemsSet = new TreeSet<>(newItems);
 
             currentItemsSet.addAll(newItemsSet);
-            System.out.println(currentItemsSet);
-
             items.clear();
             items.addAll(currentItemsSet);
         }
@@ -153,6 +156,7 @@ public class AlgorithmCollectionPanel extends JPanel {
 
     private static class SelectButtonListener implements ActionListener {
         private final SelectSortAlgorithmListener selectSortAlgorithmListener;
+
         private final JList<AlgorithmListItem> selectionList;
 
         private SelectButtonListener(SelectSortAlgorithmListener selectSortAlgorithmListener,
@@ -163,12 +167,17 @@ public class AlgorithmCollectionPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            selectSortAlgorithmListener.setNewAlgorithm(selectionList.getSelectedValue().getAlgorithm());
+            if (!selectionList.isSelectionEmpty()) {
+                SortAlgorithm selected = selectionList.getSelectedValue().getAlgorithm();
+                selectSortAlgorithmListener.setNewAlgorithm(selected);
+
+                log.debug("Was selected '{}' algorithm by pressing 'Selection button'", selected.getName());
+            }
         }
 
     }
 
-    private static class GridBagConstraintConfigurator {
+    private static class GridBagConstraintFactory {
         // scroll pane
         private static final int SCROLL_PANE_POS_X = 0;
 
@@ -192,16 +201,16 @@ public class AlgorithmCollectionPanel extends JPanel {
         private static final Insets ADD_FILE_INSETS = new Insets(10, 10, 0, 0);
 
 
-        // select button
-        private static final int SELECT_BUTTON_POS_X = 0;
+        // select item button
+        private static final int SELECT_ITEM_BUTTON_POS_X = 0;
 
-        private static final int SELECT_BUTTON_POS_Y = 2;
+        private static final int SELECT_ITEM_BUTTON_POS_Y = 2;
 
-        private static final double SELECT_BUTTON_WEIGHT_X = 1.0;
+        private static final double SELECT_ITEM_BUTTON_WEIGHT_X = 1.0;
 
-        private static final double SELECT_BUTTON_WEIGHT_Y = 0.05;
+        private static final double SELECT_ITEM_BUTTON_WEIGHT_Y = 0.05;
 
-        private static final Insets SELECT_BUTTON_INSETS = new Insets(5, 10, 10, 0);
+        private static final Insets SELECT_ITEM_BUTTON_INSETS = new Insets(5, 10, 10, 0);
 
 
         private GridBagConstraints getScrollPaneConstraints() {
@@ -227,13 +236,13 @@ public class AlgorithmCollectionPanel extends JPanel {
             return constraints;
         }
 
-        private GridBagConstraints getSelectButtonConstraints() {
+        private GridBagConstraints getSelectItemButtonConstraints() {
             GridBagConstraints constraints = new GridBagConstraints();
-            constraints.gridx = SELECT_BUTTON_POS_X;
-            constraints.gridy = SELECT_BUTTON_POS_Y;
-            constraints.weightx = SELECT_BUTTON_WEIGHT_X;
-            constraints.weighty = SELECT_BUTTON_WEIGHT_Y;
-            constraints.insets = SELECT_BUTTON_INSETS;
+            constraints.gridx = SELECT_ITEM_BUTTON_POS_X;
+            constraints.gridy = SELECT_ITEM_BUTTON_POS_Y;
+            constraints.weightx = SELECT_ITEM_BUTTON_WEIGHT_X;
+            constraints.weighty = SELECT_ITEM_BUTTON_WEIGHT_Y;
+            constraints.insets = SELECT_ITEM_BUTTON_INSETS;
 
             return constraints;
         }

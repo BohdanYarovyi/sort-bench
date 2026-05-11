@@ -25,14 +25,14 @@
   [+] Add step counter
   [+] Add speed pane
   [+] Refactor code
-[-] Add some info on the Control panel about current state of the program
-    On the left side we should have buttons and other control components. On the right side
-    we should have components that show information about current state of the program or
-    algorithm execution process (what current delay, what status {sorted, unsorted}, steps,
-    what algorithm is using, ).
 [-] Place all components on the pane
+    [-] Add some info on the Control panel about current state of the program
+        On the left side we should have buttons and other control components. On the right side
+        we should have components that show information about current state of the program or
+        algorithm execution process (what current delay, what status {sorted, unsorted}, steps,
+        what algorithm is using, ).
 [+] Add hints on sorting screen
-[~] Implement algorithm collection pane
+[+] Implement algorithm collection pane
   [+] Add scrollable list
   [+] Add default algorithms
   [+] Add algorithm chose button
@@ -41,8 +41,11 @@
     [+] Add button for choosing new algorithm from file directory
     [+] Create external API for using it for creating external .class files
     [+] Create a few algorithms with external API
-  [-] Refactor code
+  [+] Refactor code
 [+] Create LIB for adding any sorting algorithm to program
-[-] Publish external LIB on the Maven Central
 [-] Beautify the application
+[-] Publish external LIB on the Maven Central
+   [-] Write Javadoc in LIB classes
+   [-] Organize pom file
+[-] Write README file
 [-] ... (add new ones after reviewing the project)

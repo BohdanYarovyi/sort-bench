@@ -10,6 +10,8 @@ public interface ApplicationProperties {
 
     String APPLICATION_FONT = "Times New Roman";
 
+    String BUILTIN_ALGORITHM_LOCATION = "com/maybyes/sortbench/app/util/algorithm/impl";
+
     int APPLICATION_FONT_SIZE = 20;
 
     int STARTUP_BARS_AMOUNT = 20;

@@ -7,35 +7,40 @@ import lombok.Getter;
 import com.maybyes.sortbench.app.controller.BarAlignmentController;
 import com.maybyes.sortbench.app.drawer.SortingDisplayBarDrawer;
 import com.maybyes.sortbench.app.model.Bar;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+@Slf4j
 @Getter
-public class SortingDisplayPanel extends JPanel implements UpdateBarsOnScreenListener {
+public class BarSortingPanel extends JPanel implements UpdateBarsOnScreenListener {
+    private final SimpleSortingController sortingController;
+
     private final BarAlignmentController alignmentController;
 
     private final SortingDisplayBarDrawer sortingDisplayBarDrawer;
 
     private final SortingDisplayHintDrawer sortingDisplayHintDrawer;
 
-    private final SimpleSortingController sortingController;
-
     private List<Bar> bars;
 
-    public SortingDisplayPanel(SimpleSortingController sortingController) {
+    public BarSortingPanel(SimpleSortingController sortingController) {
         this.sortingController = sortingController;
         this.alignmentController = new BarAlignmentController();
         this.sortingDisplayBarDrawer = new SortingDisplayBarDrawer();
         this.sortingDisplayHintDrawer = new SortingDisplayHintDrawer();
 
+        this.sortingController.setUpdateBarsOnScreenListener(this);
+
         configure();
-        sortingController.setUpdateBarsOnScreenListener(this);
     }
 
     private void configure() {
         setBackground(new Color(100, 222, 222));
+
+        log.debug("{} was configured", getClass().getName());
     }
 
     @Override

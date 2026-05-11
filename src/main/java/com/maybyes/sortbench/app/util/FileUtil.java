@@ -1,5 +1,7 @@
 package com.maybyes.sortbench.app.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -8,21 +10,22 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class FileUtil {
 
-    public static <T> Class<T> createClass(Path path, Class<T> clazz) {
+    public static Class<?> createClass(Path path) throws ClassNotFoundException {
         if (!path.isAbsolute()) {
-            throw new RuntimeException("Given path is not absolute '%s'".formatted(path.toString()));
+            throw new IllegalArgumentException("Given path is not absolute '%s'".formatted(path.toString()));
         }
 
         URL[] directories = toDirectories(path);
         try (URLClassLoader urlClassLoader = URLClassLoader.newInstance(directories)) {
-            String filename = path.getFileName().toString().replace(".class", "");
-            Class<?> aClass = urlClassLoader.loadClass(filename);
+            String filename = path.getFileName().toString()
+                    .replace(".class", "");
 
-            return (Class<T>) aClass;
+            return urlClassLoader.loadClass(filename);
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException("Failed to create class based on the file '%s'".formatted(path), e);
+            throw new ClassNotFoundException("Failed to create class based on the file '%s'".formatted(path), e);
         }
     }
 
@@ -33,7 +36,7 @@ public class FileUtil {
                 URL dirUrl = path.getParent().toUri().toURL();
                 dirs.add(dirUrl);
             } catch (MalformedURLException ex) {
-                System.err.printf("Error: Failed to load file with path '%s'%n", path);
+                log.warn("Failed to find directory {}", path);
             }
         }
 
@@ -41,11 +44,8 @@ public class FileUtil {
     }
 
 
-    public static boolean isClassInstanceOfParent(Class<?> clazz, Class<?> parent) {
-        String className = clazz.getSuperclass().getName();
-        String parentName = parent.getName();
-
-        return className.equals(parentName);
+    public static boolean isSubClassOf(Class<?> clazz, Class<?> parent) {
+        return parent.isAssignableFrom(clazz);
     }
 
 }

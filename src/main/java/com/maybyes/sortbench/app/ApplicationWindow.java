@@ -1,15 +1,15 @@
 package com.maybyes.sortbench.app;
 
-import com.maybyes.sortbench.app.panel.AlgorithmDashboardPanel;
-import com.maybyes.sortbench.app.panel.AlgorithmCollectionPanel;
+import com.maybyes.sortbench.app.panel.AlgorithmWorkspacePanel;
+import com.maybyes.sortbench.app.panel.AlgorithmSelectorPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ApplicationWindow extends JFrame {
-    private final AlgorithmCollectionPanel algorithmCollectionPanel;
+    private final AlgorithmSelectorPanel algorithmSelectorPanel;
 
-    private final AlgorithmDashboardPanel algorithmDashboardPanel;
+    private final AlgorithmWorkspacePanel algorithmWorkspacePanel;
 
     private final Dimension userScreenSize;
 
@@ -18,14 +18,15 @@ public class ApplicationWindow extends JFrame {
     private final Dimension minimumSize;
 
     public ApplicationWindow() {
-        algorithmCollectionPanel = new AlgorithmCollectionPanel();
-        algorithmDashboardPanel = new AlgorithmDashboardPanel();
+        algorithmSelectorPanel = new AlgorithmSelectorPanel();
+        algorithmWorkspacePanel = new AlgorithmWorkspacePanel();
         userScreenSize = ApplicationProperties.getUserScreenSize();
         initialSize = getInitialFrameSize();
         minimumSize = getMinimumFrameSize();
 
-        algorithmCollectionPanel.setSelectSortAlgorithmListener(algorithmDashboardPanel);
-        algorithmCollectionPanel.configure();
+        algorithmSelectorPanel.setSelectSortAlgorithmListener(algorithmWorkspacePanel);
+        algorithmSelectorPanel.configure();
+        algorithmWorkspacePanel.configure();
 
         customizeFrame();
         configurePanels();
@@ -42,8 +43,8 @@ public class ApplicationWindow extends JFrame {
 
     private void configurePanels() {
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPane.setLeftComponent(algorithmCollectionPanel);
-        splitPane.setRightComponent(algorithmDashboardPanel);
+        splitPane.setLeftComponent(algorithmSelectorPanel);
+        splitPane.setRightComponent(algorithmWorkspacePanel);
         splitPane.setResizeWeight(0);
         splitPane.setBorder(null);
 
