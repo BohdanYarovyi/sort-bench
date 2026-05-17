@@ -1,7 +1,7 @@
 package com.maybyes.sortbench.app.util.algorithm.impl;
 
-import com.maybyes.sortbench.abstraction.SortAlgorithm;
-import com.maybyes.sortbench.abstraction.SortingCollection;
+import io.github.bohdanyarovyi.abstraction.SortAlgorithm;
+import io.github.bohdanyarovyi.abstraction.SortingCollection;
 
 public class BubbleSortAlgorithm extends SortAlgorithm {
     private String name = "Bubble Sort";

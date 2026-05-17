@@ -11,7 +11,7 @@ import java.awt.geom.RoundRectangle2D;
 public abstract class ApplicationButton extends JButton {
     public static final Font DEFAULT_FONT = ApplicationProperties.getDefaultFont();
 
-    public static final Dimension DEFAULT_BUTTON_SIZE = new Dimension(120, 50);
+    public static final Dimension DEFAULT_BUTTON_SIZE = new Dimension(120, 35);
 
     public static final Integer DEFAULT_ARC_WIDTH = 25;
 

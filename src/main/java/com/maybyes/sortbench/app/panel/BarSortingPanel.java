@@ -16,6 +16,8 @@ import java.util.List;
 @Slf4j
 @Getter
 public class BarSortingPanel extends JPanel implements UpdateBarsOnScreenListener {
+    private static final Color BACKGROUND = new Color(205, 216, 236, 255);
+
     private final SimpleSortingController sortingController;
 
     private final BarAlignmentController alignmentController;
@@ -38,8 +40,7 @@ public class BarSortingPanel extends JPanel implements UpdateBarsOnScreenListene
     }
 
     private void configure() {
-        setBackground(new Color(100, 222, 222));
-
+        setBackground(BACKGROUND);
         log.debug("{} was configured", getClass().getName());
     }
 

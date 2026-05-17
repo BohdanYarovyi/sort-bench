@@ -1,6 +1,6 @@
 package com.maybyes.sortbench.app.listener;
 
-import com.maybyes.sortbench.abstraction.SortAlgorithm;
+import io.github.bohdanyarovyi.abstraction.SortAlgorithm;
 
 public interface SelectSortAlgorithmListener {
 

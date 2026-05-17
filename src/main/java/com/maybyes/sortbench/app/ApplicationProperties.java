@@ -1,7 +1,7 @@
 package com.maybyes.sortbench.app;
 
 import com.maybyes.sortbench.app.util.algorithm.impl.BubbleSortAlgorithm;
-import com.maybyes.sortbench.abstraction.SortAlgorithm;
+import io.github.bohdanyarovyi.abstraction.SortAlgorithm;
 
 import java.awt.*;
 
@@ -34,17 +34,17 @@ public interface ApplicationProperties {
 
     float FRAME_MINIMUM_HEIGHT_DELTA = 0.50F;
 
-    Color BAR_IDLE_COLOR = new Color(151, 151, 151);
+    Color BAR_IDLE_COLOR = new Color(119, 119, 129);
 
-    Color BAR_COMPARE_COLOR = new Color(220, 220, 220);
+    Color BAR_COMPARE_COLOR = new Color(255, 255, 255);
 
-    Color BAR_SWAP_COLOR = new Color(255, 40, 40);
+    Color BAR_SWAP_COLOR = new Color(192, 34, 34);
 
     Color BAR_PEEK_COLOR = new Color(5, 98, 189);
 
     Color BAR_SET_COLOR = new Color(0, 108, 22);
 
-    Color BAR_BORDER_COLOR = new Color(0,0,0);
+    Color BAR_BORDER_COLOR = new Color(40, 40, 44);
 
     SortAlgorithm DEFAULT_SORT_ALGORITHM = new BubbleSortAlgorithm();
 

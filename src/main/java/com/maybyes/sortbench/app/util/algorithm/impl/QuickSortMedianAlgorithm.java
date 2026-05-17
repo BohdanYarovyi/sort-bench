@@ -1,7 +1,7 @@
 package com.maybyes.sortbench.app.util.algorithm.impl;
 
-import com.maybyes.sortbench.abstraction.SortAlgorithm;
-import com.maybyes.sortbench.abstraction.SortingCollection;
+import io.github.bohdanyarovyi.abstraction.SortAlgorithm;
+import io.github.bohdanyarovyi.abstraction.SortingCollection;
 
 public class QuickSortMedianAlgorithm extends SortAlgorithm {
     private String name = "Quick Sort Median of Three";

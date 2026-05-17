@@ -4,9 +4,13 @@ import com.maybyes.sortbench.app.panel.AlgorithmWorkspacePanel;
 import com.maybyes.sortbench.app.panel.AlgorithmSelectorPanel;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
 import java.awt.*;
 
 public class ApplicationWindow extends JFrame {
+    private static final Color SPLIT_PANEL_COLOR = new Color(140, 150, 165);
+
     private final AlgorithmSelectorPanel algorithmSelectorPanel;
 
     private final AlgorithmWorkspacePanel algorithmWorkspacePanel;
@@ -47,6 +51,18 @@ public class ApplicationWindow extends JFrame {
         splitPane.setRightComponent(algorithmWorkspacePanel);
         splitPane.setResizeWeight(0);
         splitPane.setBorder(null);
+        splitPane.setUI(new BasicSplitPaneUI() {
+            @Override
+            public BasicSplitPaneDivider createDefaultDivider() {
+                return new BasicSplitPaneDivider(this) {
+                    @Override
+                    public void paint(Graphics g) {
+                        g.setColor(SPLIT_PANEL_COLOR);
+                        g.fillRect(0, 0, getSize().width, getSize().height);
+                    }
+                };
+            }
+        });
 
         add(splitPane, BorderLayout.CENTER);
     }

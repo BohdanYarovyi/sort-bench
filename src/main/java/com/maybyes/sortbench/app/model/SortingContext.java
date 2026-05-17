@@ -1,24 +1,41 @@
 package com.maybyes.sortbench.app.model;
 
+import com.maybyes.sortbench.app.ApplicationProperties;
+import com.maybyes.sortbench.app.component.combinedPanel.ContextSupplier;
+import io.github.bohdanyarovyi.abstraction.SortAlgorithm;
 import lombok.Getter;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Getter
-public class SortingContext {
-    private final List<Integer> initialData;
+public class SortingContext implements ContextSupplier {
+    private static final String NOT_AVAILABLE = "N/A";
 
-    private final List<Bar> bars;
+    private static final String STATUS_SORTED = "SORTED";
 
-    public SortingContext(int maxValue) {
-        List<Integer> numbers = IntStream.rangeClosed(1, maxValue)
+    private static final String STATUS_UNSORTED = "UNSORTED";
+
+    private List<Integer> initialData;
+
+    private List<Bar> bars;
+
+    private SortAlgorithm algorithm;
+
+    private int timerDelay = ApplicationProperties.STARTUP_STEP_DELAY;
+
+    private boolean isSorted = false;
+
+    public SortingContext() {
+    }
+
+    public void initBars(int maxValue) {
+        this.initialData = IntStream.rangeClosed(1, maxValue)
                 .boxed()
-                .collect(Collectors.toList());
-        this.initialData = Collections.unmodifiableList(numbers);
+                .toList();
         this.bars = toBars(initialData);
+        isSorted = true;
     }
 
     private List<Bar> toBars(List<Integer> initialData) {
@@ -33,8 +50,39 @@ public class SortingContext {
                 .collect(Collectors.toList());
     }
 
-    public void refreshBars() {
-        bars.forEach(Bar::setIdle);
+    @Override
+    public String getCurrentAlgorithm() {
+        if (algorithm == null) {
+            return NOT_AVAILABLE;
+        }
+
+        return algorithm.getName();
+    }
+
+    @Override
+    public String getDelayValue() {
+        if (algorithm == null) {
+            return NOT_AVAILABLE;
+        }
+
+        return String.valueOf(timerDelay);
+    }
+
+    @Override
+    public String getSortingStatus() {
+        return isSorted ? STATUS_SORTED : STATUS_UNSORTED;
+    }
+
+    public void setAlgorithm(SortAlgorithm algorithm) {
+        this.algorithm = algorithm;
+    }
+
+    public void setTimerDelay(int timerDelay) {
+        this.timerDelay = timerDelay;
+    }
+
+    public void setSorted(boolean sorted) {
+        isSorted = sorted;
     }
 
 }

@@ -26,7 +26,7 @@
 			<version>1.5.32</version>
 		</dependency>
 		<dependency>
-			<groupId>com.maybyes</groupId>
+			<groupId>io.github.bohdanyarovyi</groupId>
 			<artifactId>sort-bench-abstraction</artifactId>
 			<version>1.0</version>
 		</dependency>

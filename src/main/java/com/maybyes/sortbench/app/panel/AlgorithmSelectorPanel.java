@@ -1,6 +1,6 @@
 package com.maybyes.sortbench.app.panel;
 
-import com.maybyes.sortbench.abstraction.SortAlgorithm;
+import io.github.bohdanyarovyi.abstraction.SortAlgorithm;
 import com.maybyes.sortbench.app.component.button.ApplicationButton;
 import com.maybyes.sortbench.app.component.button.AddNewFileButton;
 import com.maybyes.sortbench.app.component.button.SelectAlgorithmButton;
@@ -28,6 +28,8 @@ import java.util.TreeSet;
 @Getter
 @Setter
 public class AlgorithmSelectorPanel extends JPanel {
+    private final static Color BACKGROUND = new Color(203, 209, 218, 255);
+
     private final static String LIST_TITLE = "Algorithms";
 
     private final static Dimension MINIMUM_SIZE = new Dimension(200, 0);
@@ -63,12 +65,12 @@ public class AlgorithmSelectorPanel extends JPanel {
 
     public void configure() {
         setLayout(new GridBagLayout());
+        setMinimumSize(MINIMUM_SIZE);
+        setBackground(BACKGROUND);
 
         configureSelectionList();
         configureAddFileButton();
         configureSelectButton();
-
-        setMinimumSize(MINIMUM_SIZE);
 
         log.debug("{} was configured", getClass().getName());
     }
@@ -77,6 +79,7 @@ public class AlgorithmSelectorPanel extends JPanel {
         selectionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollPane = new JScrollPane(selectionList);
         scrollPane.setBorder(new TitledBorder(LIST_TITLE));
+        scrollPane.setBackground(BACKGROUND);
 
         GridBagConstraints constraints = constraintsFactory.getScrollPaneConstraints();
         add(scrollPane, constraints);

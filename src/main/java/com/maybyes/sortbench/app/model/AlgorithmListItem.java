@@ -2,7 +2,7 @@ package com.maybyes.sortbench.app.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import com.maybyes.sortbench.abstraction.SortAlgorithm;
+import io.github.bohdanyarovyi.abstraction.SortAlgorithm;
 
 import java.util.Objects;
 

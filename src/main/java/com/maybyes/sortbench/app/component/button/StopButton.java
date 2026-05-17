@@ -12,27 +12,27 @@ public class StopButton extends ApplicationButton {
     @Override
     public ButtonColorTheme getIdleTheme() {
         return new ButtonColorTheme(
-                new Color(200, 30, 30),   // фон — насичений червоний
-                new Color(255, 255, 255), // текст — білий
-                new Color(140, 20, 20)    // бордер — темніший червоний
+                new Color(200, 30, 30),
+                new Color(255, 255, 255),
+                new Color(140, 20, 20)
         );
     }
 
     @Override
     public ButtonColorTheme getHoverTheme() {
         return new ButtonColorTheme(
-                new Color(220, 50, 50),   // фон — трохи світліший
-                new Color(255, 255, 255), // текст — білий
-                new Color(140, 20, 20)    // бордер — той самий
+                new Color(220, 50, 50),
+                new Color(255, 255, 255),
+                new Color(140, 20, 20)
         );
     }
 
     @Override
     public ButtonColorTheme getPressedTheme() {
         return new ButtonColorTheme(
-                new Color(150, 20, 20),   // фон — темний, "натиснутий"
-                new Color(220, 220, 220), // текст — трохи сірий
-                new Color(100, 10, 10)    // бордер — дуже темний
+                new Color(150, 20, 20),
+                new Color(220, 220, 220),
+                new Color(100, 10, 10)
         );
     }
 

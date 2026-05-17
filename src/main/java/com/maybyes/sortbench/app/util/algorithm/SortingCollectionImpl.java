@@ -1,7 +1,7 @@
 package com.maybyes.sortbench.app.util.algorithm;
 
 import com.maybyes.sortbench.app.util.algorithm.action.*;
-import com.maybyes.sortbench.abstraction.SortingCollection;
+import io.github.bohdanyarovyi.abstraction.SortingCollection;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

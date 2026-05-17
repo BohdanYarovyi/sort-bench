@@ -1,6 +1,6 @@
 package com.maybyes.sortbench.app.util.algorithm.loader;
 
-import com.maybyes.sortbench.abstraction.SortAlgorithm;
+import io.github.bohdanyarovyi.abstraction.SortAlgorithm;
 import com.maybyes.sortbench.app.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 
